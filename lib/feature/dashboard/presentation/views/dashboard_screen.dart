@@ -1,3 +1,4 @@
+import 'package:carotv/core/presentation/components/base_screen.dart';
 import 'package:carotv/core/resources/app_colors.dart';
 import 'package:carotv/feature/dashboard/presentation/components/bottom_nav_bar.dart';
 import 'package:carotv/feature/dashboard/presentation/components/search_button.dart';
@@ -37,26 +38,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          'Caro TV',
-          style: TextStyle(color: AppColors.classicYellow),
-        ),
-        centerTitle: true,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 8.0),
-            child: Icon(Icons.menu),
-          )
-        ],
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
+    return BaseScreen(
+      pageTitle: 'Caro TV',
+      noBackButton: true,
       bottomNavigationBar: BottomNavBar(_selectedIndex, _onItemTapped),
       floatingActionButton: const SearchButton(),
+      child: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
     );
   }
 }

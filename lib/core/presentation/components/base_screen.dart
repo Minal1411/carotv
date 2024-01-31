@@ -9,6 +9,8 @@ class BaseScreen extends StatelessWidget {
     required this.pageTitle,
     this.actions,
     this.bottomSheet,
+    this.bottomNavigationBar,
+    this.floatingActionButton,
     this.noBackButton = false,
   }) : super(key: key);
 
@@ -17,6 +19,8 @@ class BaseScreen extends StatelessWidget {
   final List<Widget>? actions;
   final bool noBackButton;
   final Widget? bottomSheet;
+  final Widget? bottomNavigationBar;
+  final Widget? floatingActionButton;
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +30,8 @@ class BaseScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         bottomSheet: bottomSheet,
+        bottomNavigationBar: bottomNavigationBar,
+        floatingActionButton: floatingActionButton,
         body: SizedBox(
           height: double.infinity,
           child: Column(

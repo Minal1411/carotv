@@ -12,7 +12,7 @@ const String dashBoardScreen = '/dashBoardScreen';
 const String searchScreen = 'searchScreen';
 
 class AppRouter {
-  GoRouter router = GoRouter(initialLocation: registerScreen, routes: [
+  GoRouter router = GoRouter(initialLocation: dashBoardScreen, routes: [
     GoRoute(
       name: AppRoutes.loginScreen,
       path: loginScreen,
