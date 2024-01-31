@@ -1,5 +1,4 @@
 import 'package:carotv/core/presentation/components/base_screen.dart';
-import 'package:carotv/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,12 +25,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     // final passwordConfirmationController = useTextEditingController();
     return BaseScreen(
         pageTitle: 'Register',
-        actions: [
-          Icon(
-            Icons.menu,
-            color: AppColors.classicYellow,
-          )
-        ],
         child: Container(
           height: 50.h,
           width: 100.w,

@@ -9,11 +9,13 @@ class BaseScreen extends StatelessWidget {
     required this.pageTitle,
     this.actions,
     this.bottomSheet,
+    this.noBackButton = false,
   }) : super(key: key);
 
   final Widget child;
   final String pageTitle;
   final List<Widget>? actions;
+  final bool noBackButton;
   final Widget? bottomSheet;
 
   @override
@@ -31,6 +33,7 @@ class BaseScreen extends StatelessWidget {
               CaroTvAppBar(
                 title: pageTitle,
                 titleFontSize: 20.sp,
+                noBackButton: noBackButton,
                 onBackPressed: () => Navigator.of(context).pop(),
                 actions: actions,
                 actionPadding: actions != null ? 10.w : null,

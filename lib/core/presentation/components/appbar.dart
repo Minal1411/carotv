@@ -12,6 +12,7 @@ class CaroTvAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.titleFontSize,
     this.leftPadding,
     this.actionPadding,
+    this.noBackButton,
   }) : super(key: key);
 
   final String title;
@@ -20,6 +21,7 @@ class CaroTvAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? titleFontSize;
   final double? leftPadding;
   final double? actionPadding;
+  final bool? noBackButton;
 
   @override
   Widget build(BuildContext context) {
@@ -30,32 +32,38 @@ class CaroTvAppBar extends StatelessWidget implements PreferredSizeWidget {
         width: double.infinity,
         color: AppColors.primary,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            const SizedBox(),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                5.horizontalSpace,
-                BackButton(
-                  color: AppColors.classicYellow,
-                  onPressed: onBackPressed ?? () => Navigator.pop(context),
+                noBackButton!
+                    ? SizedBox(width: 28.h)
+                    : GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: Icon(
+                          Icons.arrow_circle_left_outlined,
+                          color: AppColors.classicYellow,
+                          size: 28.h,
+                        ).pL(10.w),
+                      ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontSize: titleFontSize ?? 24,
+                            color: AppColors.classicYellow,
+                          ),
+                    ).pR(actions != null && noBackButton == false ? 12 : 0),
+                  ),
                 ),
-                const Spacer(),
-                Text(
-                  title,
-                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: titleFontSize ?? 24,
-                      color: AppColors.classicYellow),
-                ).pR(20.w),
-                const Spacer(),
                 if (actions != null) ...actions!,
-                if (actionPadding != null)
-                  actionPadding!.horizontalSpace
-                else
-                  24.horizontalSpace,
+                actions != null ? 10.horizontalSpace : 42.horizontalSpace,
               ],
-            ).pB(3.h),
+            ).pB(noBackButton! ? 9.h : 7.h),
           ],
         ),
       ),
