@@ -1,18 +1,18 @@
 import 'package:carotv/core/resources/app_routes.dart';
 import 'package:carotv/feature/auth/presentation/views/login_screen.dart';
-import 'package:carotv/feature/auth/presentation/views/signup_screen.dart';
+import 'package:carotv/feature/auth/presentation/views/register_screen.dart';
 import 'package:carotv/feature/dashboard/presentation/views/dashboard_screen.dart';
 import 'package:carotv/feature/search/presentation/views/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 const String loginScreen = '/loginScreen';
-const String signupScreen = '/signupScreen';
+const String registerScreen = '/registerScreen';
 const String dashBoardScreen = '/dashBoardScreen';
 const String searchScreen = 'searchScreen';
 
 class AppRouter {
-  GoRouter router = GoRouter(initialLocation: dashBoardScreen, routes: [
+  GoRouter router = GoRouter(initialLocation: registerScreen, routes: [
     GoRoute(
       name: AppRoutes.loginScreen,
       path: loginScreen,
@@ -20,10 +20,10 @@ class AppRouter {
           const CupertinoPage(child: LoginScreen()),
     ),
     GoRoute(
-      name: AppRoutes.signupScreen,
-      path: signupScreen,
+      name: AppRoutes.registerScreen,
+      path: registerScreen,
       pageBuilder: (context, state) =>
-          const CupertinoPage(child: SignupScreen()),
+          const CupertinoPage(child: RegisterScreen()),
     ),
     GoRoute(
         name: AppRoutes.dashBoardScreen,

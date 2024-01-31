@@ -11,7 +11,7 @@ class LoginScreen extends StatelessWidget {
       body: Center(
           child: GestureDetector(
               onTap: () {
-                context.goNamed(AppRoutes.signupScreen);
+                context.goNamed(AppRoutes.registerScreen);
               },
               child: const Text('Login Screen'))),
     );

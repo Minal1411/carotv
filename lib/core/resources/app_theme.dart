@@ -33,11 +33,11 @@ ThemeData getApplicationTheme() {
     textTheme: TextTheme(
       titleMedium: _getTextStyle(
         fontSize: 20,
-        color: AppColors.secondaryText,
+        color: AppColors.primaryText,
       ),
       titleSmall: _getTextStyle(
         fontSize: 18,
-        color: AppColors.secondaryText,
+        color: AppColors.primaryText,
       ),
       bodyLarge: _getTextStyle(
         fontSize: 14,
@@ -46,7 +46,8 @@ ThemeData getApplicationTheme() {
       ),
       bodyMedium: _getTextStyle(
         fontSize: 14,
-        color: AppColors.secondaryText,
+        fontWeight: FontWeight.w400,
+        color: AppColors.primaryText,
       ),
       bodySmall: _getTextStyle(
         fontSize: 12,
