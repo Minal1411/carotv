@@ -5,12 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class BaseScreen extends StatelessWidget {
   const BaseScreen({
     Key? key,
-    required this.child,
     required this.pageTitle,
+    required this.child,
     this.actions,
     this.bottomSheet,
     this.bottomNavigationBar,
     this.floatingActionButton,
+    this.endDrawer,
     this.noBackButton = false,
   }) : super(key: key);
 
@@ -20,6 +21,7 @@ class BaseScreen extends StatelessWidget {
   final bool noBackButton;
   final Widget? bottomSheet;
   final Widget? bottomNavigationBar;
+  final Widget? endDrawer;
   final Widget? floatingActionButton;
 
   @override
@@ -30,6 +32,7 @@ class BaseScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
         bottomSheet: bottomSheet,
+        endDrawer: endDrawer,
         bottomNavigationBar: bottomNavigationBar,
         floatingActionButton: floatingActionButton,
         body: SizedBox(
@@ -44,7 +47,7 @@ class BaseScreen extends StatelessWidget {
                 actions: actions,
                 actionPadding: actions != null ? 10.w : null,
               ),
-              child
+              Expanded(child: child)
             ],
           ),
         ),

@@ -41,6 +41,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     return BaseScreen(
       pageTitle: 'Caro TV',
       noBackButton: true,
+      actions: [
+        Icon(
+          Icons.menu,
+          color: AppColors.classicYellow,
+        )
+      ],
       bottomNavigationBar: BottomNavBar(_selectedIndex, _onItemTapped),
       floatingActionButton: const SearchButton(),
       child: Center(
