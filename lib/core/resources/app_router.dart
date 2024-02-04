@@ -7,24 +7,31 @@ import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
 const String loginScreen = '/loginScreen';
-const String registerScreen = '/registerScreen';
+const String registerScreen = 'registerScreen';
 const String dashBoardScreen = '/dashBoardScreen';
 const String searchScreen = 'searchScreen';
 
 class AppRouter {
-  GoRouter router = GoRouter(initialLocation: dashBoardScreen, routes: [
+  GoRouter router = GoRouter(initialLocation: loginScreen, routes: [
     GoRoute(
-      name: AppRoutes.loginScreen,
-      path: loginScreen,
-      pageBuilder: (context, state) =>
-          const CupertinoPage(child: LoginScreen()),
-    ),
-    GoRoute(
-      name: AppRoutes.registerScreen,
-      path: registerScreen,
-      pageBuilder: (context, state) =>
-          const CupertinoPage(child: RegisterScreen()),
-    ),
+        name: AppRoutes.loginScreen,
+        path: loginScreen,
+        pageBuilder: (context, state) =>
+            const CupertinoPage(child: LoginScreen()),
+        routes: [
+          GoRoute(
+            name: AppRoutes.registerScreen,
+            path: registerScreen,
+            pageBuilder: (context, state) {
+              final data = state.extra as Map<String, Object?>;
+              return CupertinoPage(
+                  child: RegisterScreen(
+                username: data['username'] as String,
+                password: data['password'] as String,
+              ));
+            },
+          ),
+        ]),
     GoRoute(
         name: AppRoutes.dashBoardScreen,
         path: dashBoardScreen,

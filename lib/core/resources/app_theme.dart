@@ -30,31 +30,31 @@ ThemeData getApplicationTheme() {
     ),
 
     // text theme
-    textTheme: TextTheme(
-      titleMedium: _getTextStyle(
-        fontSize: 20,
-        color: AppColors.primaryText,
-      ),
-      titleSmall: _getTextStyle(
-        fontSize: 18,
-        color: AppColors.primaryText,
-      ),
-      bodyLarge: _getTextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        color: AppColors.primaryText,
-      ),
-      bodyMedium: _getTextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.w400,
-        color: AppColors.primaryText,
-      ),
-      bodySmall: _getTextStyle(
-        fontSize: 12,
-        fontWeight: FontWeight.w400,
-        color: AppColors.primaryText,
-      ),
-    ),
+    // textTheme: TextTheme(
+    //   titleMedium: _getTextStyle(
+    //     fontSize: 20,
+    //     color: AppColors.primaryText,
+    //   ),
+    //   titleSmall: _getTextStyle(
+    //     fontSize: 18,
+    //     color: AppColors.primaryText,
+    //   ),
+    //   bodyLarge: _getTextStyle(
+    //     fontSize: 14,
+    //     fontWeight: FontWeight.w400,
+    //     color: AppColors.primaryText,
+    //   ),
+    //   bodyMedium: _getTextStyle(
+    //     fontSize: 14,
+    //     fontWeight: FontWeight.w400,
+    //     color: AppColors.primaryText,
+    //   ),
+    //   bodySmall: _getTextStyle(
+    //     fontSize: 12,
+    //     fontWeight: FontWeight.w400,
+    //     color: AppColors.primaryText,
+    //   ),
+    // ),
   );
 }
 

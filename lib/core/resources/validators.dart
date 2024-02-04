@@ -55,4 +55,36 @@ class Validator {
   static String? textValidator(String? value) {
     return value!.isEmpty ? "This field can't be empty" : null;
   }
+
+  static String? passwordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password cannot be empty.';
+    }
+
+    bool hasLowerCase = RegExp(r'[a-z]').hasMatch(value);
+    bool hasUpperCase = RegExp(r'[A-Z]').hasMatch(value);
+    bool hasNumber = RegExp(r'[0-9]').hasMatch(value);
+
+    if (value.length < 8 || !hasLowerCase || !hasUpperCase || !hasNumber) {
+      List<String> missingRequirements = [];
+
+      if (value.length < 8) {
+        missingRequirements.add(' minimum 8 characters');
+      }
+      if (!hasLowerCase) {
+        missingRequirements.add(' 1 lowercase');
+      }
+      if (!hasUpperCase) {
+        missingRequirements.add(' 1 uppercase');
+      }
+      if (!hasNumber) {
+        missingRequirements.add(' 1 number');
+      }
+
+      String missingRequirementsString = missingRequirements.join(', ');
+      return 'Must contain$missingRequirementsString.';
+    }
+
+    return null;
+  }
 }
