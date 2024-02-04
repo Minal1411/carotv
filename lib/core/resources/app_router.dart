@@ -23,12 +23,13 @@ class AppRouter {
             name: AppRoutes.registerScreen,
             path: registerScreen,
             pageBuilder: (context, state) {
-              final data = state.extra as Map<String, Object?>;
+              final data = state.extra as List<Object?>;
               return CupertinoPage(
-                  child: RegisterScreen(
-                username: data['username'] as String,
-                password: data['password'] as String,
-              ));
+                child: RegisterScreen(
+                  username: data[0] as String,
+                  password: data[1] as String,
+                ),
+              );
             },
           ),
         ]),

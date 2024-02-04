@@ -55,14 +55,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (_formKey.currentState?.validate() ?? false) {
                           final username = _formKey.value<String>('username');
                           final password = _formKey.value<String>('password');
-                          print('Username:$username');
-                          print('Password:$password');
-
                           if (mounted) {
-                            context.goNamed(AppRoutes.registerScreen, extra: {
-                              'username': username,
-                              'password': password,
-                            });
+                            context.goNamed(AppRoutes.registerScreen,
+                                extra: [username, password]);
                           }
                         }
                       },
