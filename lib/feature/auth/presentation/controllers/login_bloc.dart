@@ -10,7 +10,8 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUseCase _loginUseCase;
 
-  LoginBloc(this._loginUseCase) : super(const LoginState()) {
+  LoginBloc(this._loginUseCase)
+      : super(const LoginState(status: RequestStatus.initial)) {
     on<LoginButtonPressed>(_postLogin);
   }
 
@@ -23,7 +24,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     final result = await _loginUseCase(loginParameters);
 
     result.fold((failure) {
-      emit(state.copyWith(status: RequestStatus.error));
+      emit(state.copyWith(
+          status: RequestStatus.error, message: failure.message));
     }, (loginModel) {
       emit(
           state.copyWith(status: RequestStatus.loaded, loginModel: loginModel));

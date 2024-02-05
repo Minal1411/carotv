@@ -1,4 +1,5 @@
 import 'package:carotv/core/resources/app_colors.dart';
+import 'package:carotv/core/resources/app_styles.dart';
 import 'package:carotv/core/resources/extensions/padding_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,17 +54,17 @@ class CaroTvAppBar extends StatelessWidget implements PreferredSizeWidget {
                     alignment: Alignment.center,
                     child: Text(
                       title,
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                            fontSize: titleFontSize ?? 24,
-                            color: AppColors.classicYellow,
-                          ),
+                      style: AppTextStyle.boldText16.copyWith(
+                        fontSize: titleFontSize ?? 24,
+                        color: AppColors.classicYellow,
+                      ),
                     ).pR(actions != null && noBackButton == false ? 12 : 0),
                   ),
                 ),
                 if (actions != null) ...actions!,
                 actions != null ? 10.horizontalSpace : 42.horizontalSpace,
               ],
-            ).pB(noBackButton! ? 9.h : 7.h),
+            ).pB(7.h),
           ],
         ),
       ),
