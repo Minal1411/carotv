@@ -13,7 +13,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulHookWidget {
   const LoginScreen({super.key});
@@ -28,11 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
   String? validatedPassword;
 
   void _handleLogin() async {
-    if (_formKey.currentState?.validate() ?? false) {
-      validatedUsername = _formKey.value<String>('username');
-      validatedPassword = _formKey.value<String>('password');
+    validatedUsername = _formKey.value<String>('username');
+    validatedPassword = _formKey.value<String>('password');
 
-      // Access LoginBloc and dispatch event
+    if (_formKey.currentState?.validate() ?? false) {
       final loginBloc = sl<LoginBloc>();
       loginBloc.add(LoginButtonPressed(
         username: validatedUsername!,
@@ -45,10 +43,16 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
+        print('ERROR: $state');
         if (state.status == RequestStatus.loaded) {
-          context.goNamed(AppRoutes.registerScreen,
-              extra: [validatedUsername, validatedPassword]);
+          // Navigate to the register screen
+          Navigator.of(context).pushNamed(
+            AppRoutes.registerScreen,
+            arguments: [validatedUsername, validatedPassword],
+          );
         } else if (state.status == RequestStatus.error) {
+          // Show error snackbar
+          print('ERROR: ${state.message}');
           _showSnackBar(context, state.message);
         }
       },
@@ -87,8 +91,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       label: 'Password',
                     ),
                     Container(
-                      height: 40.h,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                         color: AppColors.primary,
                       ),

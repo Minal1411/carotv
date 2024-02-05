@@ -12,46 +12,48 @@ abstract class AuthDataSource {
 class AuthDataSourceImpl extends AuthDataSource {
   @override
   Future<LoginModel> postLogin(String username, String password) async {
-    try {
-      final dio = Dio();
+    final dio = Dio();
 
-      // Log request details before making the request
-      final options = Options(
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        }, // Adjust headers as needed
+    // Set a custom validateStatus function that does not throw for 404
+    dio.options.validateStatus = (status) {
+      return status == null || (status >= 200 && status < 300) || status == 404;
+    };
+
+    final options = Options(
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    );
+
+    final requestUri = Uri.parse(ApiConstants.loginUrl);
+    print('Pre Request URL: $requestUri');
+    print('Pre Request Headers: ${options.headers}');
+    print(
+        'Pre Request Body: { "username": "$username", "password": "$password" }');
+
+    final response = await dio.post(
+      ApiConstants.loginUrl,
+      options: options,
+      data: {'username': username, 'password': password},
+    );
+
+    if (kDebugMode) {
+      print('Post Request Status Code: ${response.statusCode}');
+      print('Post Request Status Message: ${response.data}');
+      print('Post Request Data: ${response.requestOptions.data}');
+    }
+
+    if (response.statusCode == 200) {
+      return LoginModel.fromJson(response.data);
+    } else if (response.statusCode == 404) {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
       );
-      final requestUri = Uri.parse(ApiConstants.loginUrl);
-      print('Pre Request URL: $requestUri');
-      print('Pre Request Headers: ${options.headers}');
-      print(
-          'Pre Request Body: { "username": "$username", "password": "$password" }');
-
-      final response = await dio.post(
-        ApiConstants.loginUrl,
-        options: options,
-        data: {'username': username, 'password': password},
+    } else {
+      throw ServerException(
+        errorMessageModel: ErrorMessageModel.fromJson(response.data),
       );
-
-      if (kDebugMode) {
-        // Log the request details again after making the request
-        print('Post Request URL: ${response.requestOptions.uri}');
-        print('Post Request Headers: ${response.requestOptions.headers}');
-        print('Post Request Body: ${response.requestOptions.data}');
-      }
-
-      if (response.statusCode == 200) {
-        return LoginModel.fromJson(response.data);
-      } else {
-        throw ServerException(
-          errorMessageModel: ErrorMessageModel.fromJson(response.data),
-        );
-      }
-    } catch (error) {
-      // Log the error for debugging purposes
-      print('Error in postLogin: $error');
-      throw Exception(error);
     }
   }
 }
