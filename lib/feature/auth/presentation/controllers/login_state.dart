@@ -1,6 +1,6 @@
 part of 'login_bloc.dart';
 
-class LoginState {
+class LoginState extends Equatable {
   final LoginModel? loginModel;
   final RequestStatus status;
   final String message;
@@ -9,6 +9,9 @@ class LoginState {
       {this.loginModel,
       this.status = RequestStatus.loading,
       this.message = ''});
+
+  @override
+  List<Object?> get props => [loginModel, status, message];
 
   LoginState copyWith({
     LoginModel? loginModel,
