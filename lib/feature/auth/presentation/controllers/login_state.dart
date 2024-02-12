@@ -7,7 +7,7 @@ class LoginState extends Equatable {
 
   const LoginState(
       {this.loginModel,
-      this.status = RequestStatus.loading,
+      this.status = RequestStatus.initial,
       this.message = ''});
 
   @override

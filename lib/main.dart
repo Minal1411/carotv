@@ -10,9 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 void main() {
   ServiceLocator.init();
   runApp(BlocProvider(
-    create: (context) => sl<LoginBloc>(),
-    child: const MyApp(),
-  ));
+      create: (BuildContext context) => sl<LoginBloc>(), child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {

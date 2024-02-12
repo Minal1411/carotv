@@ -1,6 +1,6 @@
 import 'package:carotv/core/presentation/components/base_screen.dart';
+import 'package:carotv/core/presentation/components/primary_button.dart';
 import 'package:carotv/core/presentation/components/text_field_column.dart';
-import 'package:carotv/core/resources/app_colors.dart';
 import 'package:carotv/core/resources/app_routes.dart';
 import 'package:carotv/core/resources/extensions/form_field_extensions.dart';
 import 'package:carotv/core/resources/extensions/padding_extensions.dart';
@@ -8,11 +8,13 @@ import 'package:carotv/core/resources/validators.dart';
 import 'package:carotv/core/services/service_locator.dart';
 import 'package:carotv/core/utils/enums.dart';
 import 'package:carotv/feature/auth/presentation/controllers/login_bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulHookWidget {
   const LoginScreen({super.key});
@@ -23,111 +25,88 @@ class LoginScreen extends StatefulHookWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   static final _formKey = GlobalKey<FormBuilderState>();
-  String? validatedUsername;
-  String? validatedPassword;
-
-  void _handleLogin() async {
-    validatedUsername = _formKey.value<String>('username');
-    validatedPassword = _formKey.value<String>('password');
-
-    if (_formKey.currentState?.validate() ?? false) {
-      final loginBloc = sl<LoginBloc>();
-      loginBloc.add(LoginButtonPressed(
-        username: validatedUsername!,
-        password: validatedPassword!,
-      ));
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LoginBloc, LoginState>(
-      listener: (context, state) {
-        print('ERROR: $state');
-        if (state.status == RequestStatus.loaded) {
-          // Navigate to the register screen
-          Navigator.of(context).pushNamed(
-            AppRoutes.registerScreen,
-            arguments: [validatedUsername, validatedPassword],
-          );
-        } else if (state.status == RequestStatus.error) {
-          // Show error snackbar
-          print('ERROR: ${state.message}');
-          _showSnackBar(context, state.message);
-        }
-      },
-      child: _buildLoginForm(),
-    );
-  }
+    return BlocProvider(
+      create: (context) => sl<LoginBloc>(),
+      child: BaseScreen(
+        pageTitle: 'Login',
+        child: BlocConsumer<LoginBloc, LoginState>(
+          listener: (context, state) {
+            if (kDebugMode) {
+              print('Listener State: $state');
+            }
 
-  Widget _buildLoginForm() {
-    return BaseScreen(
-      pageTitle: 'Login',
-      child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: SizedBox(
-          height: 600.h,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.home_outlined,
-                size: 100.h,
-                color: AppColors.primary,
-              ).pB(50.h).pT(30.h),
-              FormBuilder(
-                key: _formKey,
+            switch (state.status) {
+              case RequestStatus.error:
+                _showSnackBar(context, state.message);
+                break;
+              case RequestStatus.loaded:
+                context.goNamed(AppRoutes.registerScreen, extra: [
+                  _formKey.value('username'),
+                  _formKey.value('password'),
+                ]);
+                break;
+              default:
+                // Handle other states if needed
+                break;
+            }
+          },
+          builder: (context, state) {
+            if (kDebugMode) {
+              print('Builder State: $state');
+            }
+            return SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: SizedBox(
+                height: 600.h,
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TextFieldColumn(
-                      fieldName: 'username',
-                      hint: 'Enter username',
-                      label: 'Username',
+                    Image.asset('assets/images/carotv.png').pB(10.h).pT(10.h),
+                    FormBuilder(
+                      key: _formKey,
+                      child: Column(
+                        children: [
+                          const TextFieldColumn(
+                            fieldName: 'username',
+                            hint: 'Enter username',
+                            extraValidator: Validator.textValidator,
+                            label: 'Username',
+                          ),
+                          const TextFieldColumn(
+                            fieldName: 'password',
+                            hint: 'Enter password',
+                            extraValidator: Validator.passwordValidator,
+                            label: 'Password',
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              if (_formKey.currentState!.validate()) {
+                                context
+                                    .read<LoginBloc>()
+                                    .add(LoginButtonPressed(
+                                      username: _formKey.value('username'),
+                                      password: _formKey.value('password'),
+                                    ));
+                              }
+                            },
+                            child: PrimaryButton(
+                              status: state.status,
+                              buttonName: 'Submit',
+                            ).pXY(20, 20),
+                          ),
+                        ],
+                      ).pX(20.w),
                     ),
-                    const TextFieldColumn(
-                      fieldName: 'password',
-                      hint: 'Enter password',
-                      extraValidator: Validator.passwordValidator,
-                      label: 'Password',
-                    ),
-                    Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        color: AppColors.primary,
-                      ),
-                      child: Center(
-                        child: _buildSubmitButton(),
-                      ),
-                    ).pXY(20, 20),
                   ],
-                ).pX(20.w),
+                ),
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
-    );
-  }
-
-  Widget _buildSubmitButton() {
-    return BlocBuilder<LoginBloc, LoginState>(
-      builder: (context, state) {
-        return TextButton(
-          onPressed:
-              state.status == RequestStatus.loading ? null : _handleLogin,
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.white,
-          ),
-          child: state.status == RequestStatus.loading
-              ? const CircularProgressIndicator()
-              : Text(
-                  'Submit',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: AppColors.classicYellow,
-                      ),
-                ),
-        );
-      },
     );
   }
 

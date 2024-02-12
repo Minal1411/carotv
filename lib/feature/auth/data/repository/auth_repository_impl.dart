@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:carotv/core/data/error/exceptions.dart';
 import 'package:carotv/core/data/error/failure.dart';
 import 'package:carotv/feature/auth/data/datasource/auth_data_source.dart';
@@ -21,6 +23,9 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(ServerFailure(failure.errorMessageModel.errorMessage ??
           'Some error occurred. Please try again.'));
     } on DioException catch (failure) {
+      if (failure.error is SocketException) {
+        return const Left(ServerFailure('No internet connection.'));
+      }
       return Left(
           ServerFailure(failure.message ?? 'Some unexpected error occurred.'));
     }
