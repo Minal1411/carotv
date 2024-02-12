@@ -2,15 +2,12 @@ import 'package:carotv/core/resources/app_router.dart';
 import 'package:carotv/core/resources/app_strings.dart';
 import 'package:carotv/core/resources/app_theme.dart';
 import 'package:carotv/core/services/service_locator.dart';
-import 'package:carotv/feature/auth/presentation/controllers/login_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
   ServiceLocator.init();
-  runApp(BlocProvider(
-      create: (BuildContext context) => sl<LoginBloc>(), child: const MyApp()));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

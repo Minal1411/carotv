@@ -6,39 +6,46 @@ import 'package:carotv/feature/search/presentation/views/search_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-const String loginScreen = '/loginScreen';
+const String loginScreen = 'loginScreen';
 const String registerScreen = 'registerScreen';
 const String dashBoardScreen = '/dashBoardScreen';
 const String searchScreen = 'searchScreen';
 
 class AppRouter {
-  GoRouter router = GoRouter(initialLocation: loginScreen, routes: [
-    GoRoute(
-        name: AppRoutes.loginScreen,
-        path: loginScreen,
-        pageBuilder: (context, state) =>
-            const CupertinoPage(child: LoginScreen()),
-        routes: [
-          GoRoute(
-            name: AppRoutes.registerScreen,
-            path: registerScreen,
-            pageBuilder: (context, state) {
-              final data = state.extra as List<Object?>;
-              return CupertinoPage(
-                child: RegisterScreen(
-                  username: data[0] as String,
-                  password: data[1] as String,
-                ),
-              );
-            },
-          ),
-        ]),
+  GoRouter router = GoRouter(initialLocation: dashBoardScreen, routes: [
     GoRoute(
         name: AppRoutes.dashBoardScreen,
         path: dashBoardScreen,
         pageBuilder: (context, state) =>
             const CupertinoPage(child: DashBoardScreen()),
         routes: [
+          GoRoute(
+              name: AppRoutes.loginScreen,
+              path: loginScreen,
+              pageBuilder: (context, state) =>
+                  const CupertinoPage(child: LoginScreen()),
+              routes: [
+                // GoRoute(
+                //   name: AppRoutes.registerScreen,
+                //   path: registerScreen,
+                //   pageBuilder: (context, state) {
+                //     final data = state.extra as List<Object?>;
+                //     return CupertinoPage(
+                //       child: RegisterScreen(
+                //         username: data[0] as String,
+                //         password: data[1] as String,
+                //       ),
+                //     );
+                //   },
+                // ),
+              ]),
+          GoRoute(
+            name: AppRoutes.registerScreen,
+            path: searchScreen,
+            pageBuilder: (context, state) => const CupertinoPage(
+                child:
+                    RegisterScreen(username: 'username', password: 'password')),
+          ),
           GoRoute(
             name: AppRoutes.searchScreen,
             path: searchScreen,
