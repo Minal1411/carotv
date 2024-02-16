@@ -1,5 +1,6 @@
 import 'package:carotv/core/resources/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class BottomNavBar extends StatelessWidget {
   final int selectedIndex;
@@ -10,27 +11,29 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: AppColors.secondary,
-      unselectedItemColor: Colors.black.withOpacity(0.4),
+      backgroundColor: AppColors.primary,
+      unselectedItemColor: Colors.white.withOpacity(0.6),
       selectedItemColor: AppColors.classicYellow,
       currentIndex: selectedIndex,
+      showSelectedLabels: false,
+      showUnselectedLabels: false,
       onTap: onItemTapped,
-      items: const [
+      items: [
         BottomNavigationBarItem(
           label: 'Home',
-          icon: Icon(Icons.home_outlined, size: 20),
+          icon: Icon(Icons.home_outlined, size: 34.w),
+        ),
+        BottomNavigationBarItem(
+          label: 'Search',
+          icon: Icon(Icons.search, size: 34.w),
         ),
         BottomNavigationBarItem(
           label: 'Live TV',
-          icon: Icon(Icons.live_tv, size: 20),
+          icon: Icon(Icons.live_tv, size: 34.w),
         ),
         BottomNavigationBarItem(
-          label: 'Movies',
-          icon: Icon(Icons.movie_filter_outlined, size: 20),
-        ),
-        BottomNavigationBarItem(
-          label: 'Shows',
-          icon: Icon(Icons.slideshow_sharp, size: 20),
+          label: 'More',
+          icon: Icon(Icons.more_horiz_sharp, size: 34.w),
         ),
       ],
     );

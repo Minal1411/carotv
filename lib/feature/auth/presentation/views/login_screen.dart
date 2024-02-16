@@ -1,7 +1,11 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:carotv/core/presentation/components/base_screen.dart';
+import 'package:carotv/core/presentation/components/carotvSnackbar.dart';
+import 'package:carotv/core/presentation/components/carotv_text_field.dart';
 import 'package:carotv/core/presentation/components/primary_button.dart';
-import 'package:carotv/core/presentation/components/text_field_column.dart';
+import 'package:carotv/core/resources/app_colors.dart';
 import 'package:carotv/core/resources/app_routes.dart';
+import 'package:carotv/core/resources/app_styles.dart';
 import 'package:carotv/core/resources/extensions/form_field_extensions.dart';
 import 'package:carotv/core/resources/extensions/padding_extensions.dart';
 import 'package:carotv/core/resources/validators.dart';
@@ -14,6 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginScreen extends StatefulHookWidget {
@@ -40,7 +45,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
             switch (state.status) {
               case RequestStatus.error:
-                _showSnackBar(context, state.message);
+                showSnackBar(
+                    context, 'OOPS!', state.message, ContentType.failure);
                 break;
               case RequestStatus.loaded:
                 context.goNamed(AppRoutes.registerScreen, extra: [
@@ -59,64 +65,82 @@ class _LoginScreenState extends State<LoginScreen> {
             }
             return SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
-              child: SizedBox(
-                height: 540.h,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Image.asset('assets/images/carotv.png').pB(10.h).pT(10.h),
-                    FormBuilder(
-                      key: _formKey,
-                      child: Column(
-                        children: [
-                          const TextFieldColumn(
-                            fieldName: 'username',
-                            hint: 'Enter username',
-                            extraValidator: Validator.textValidator,
-                            label: 'Username',
-                          ),
-                          const TextFieldColumn(
-                            fieldName: 'password',
-                            hint: 'Enter password',
-                            extraValidator: Validator.passwordValidator,
-                            label: 'Password',
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              if (_formKey.currentState!.validate()) {
-                                context
-                                    .read<LoginBloc>()
-                                    .add(LoginButtonPressed(
-                                      username: _formKey.value('username'),
-                                      password: _formKey.value('password'),
-                                    ));
-                              }
-                            },
-                            child: PrimaryButton(
-                              status: state.status,
-                              buttonName: 'Submit',
-                            ).pXY(20, 20),
-                          ),
-                        ],
-                      ).pX(20.w),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Center(
+                    child: SvgPicture.asset(
+                      'assets/svg/app_logo.svg',
+                      height: 70.h,
                     ),
-                  ],
-                ),
-              ),
+                  ).pT(50.h).pB(80.h),
+                  Text('Login',
+                          style: AppTextStyle.regularText50
+                              .copyWith(color: Colors.white))
+                      .pB(15.h),
+                  Text('Please sign in to continue',
+                          style: AppTextStyle.regularText20
+                              .copyWith(color: Colors.white))
+                      .pB(40.h),
+                  FormBuilder(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        const CarotvTextField(
+                          fieldName: 'username',
+                          hint: 'Username',
+                          extraValidator: Validator.textValidator,
+                          label: 'Username',
+                          prefixIcon: Icon(
+                            Icons.person,
+                            color: AppColors.primary,
+                          ),
+                        ).pB(16.h),
+                        const CarotvTextField(
+                          fieldName: 'password',
+                          hint: 'Password',
+                          extraValidator: Validator.passwordValidator,
+                          label: 'Password',
+                          isPassword: true,
+                          prefixIcon: Icon(
+                            Icons.lock,
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        GestureDetector(
+                          child: Text(
+                            'Forget Password?',
+                            style: AppTextStyle.lightText14.copyWith(
+                                color: Colors.white,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.white),
+                          ).pY(25.h),
+                        ),
+                        GestureDetector(
+                          onTap: () async {
+                            if (_formKey.currentState!.validate()) {
+                              context.read<LoginBloc>().add(LoginButtonPressed(
+                                    username: _formKey.value('username'),
+                                    password: _formKey.value('password'),
+                                  ));
+                            }
+                          },
+                          child: PrimaryButton(
+                            status: state.status,
+                            buttonName: 'Submit',
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ).pX(42.w),
             );
           },
         ),
       ),
     );
-  }
-
-  void _showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(
-      content: Text(
-        message,
-        style: const TextStyle(color: Colors.white),
-      ),
-    );
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

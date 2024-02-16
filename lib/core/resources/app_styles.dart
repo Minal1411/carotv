@@ -161,7 +161,21 @@ abstract class AppTextStyle {
     letterSpacing: 1.w,
     height: 1.2,
   );
+  static TextStyle regularText50 = TextStyle(
+    fontFamily: 'PoppinsRegular',
+    fontWeight: FontWeight.w400,
+    fontSize: 50.sp,
+    letterSpacing: 1.w,
+    height: 1.2,
+  );
 
+  static TextStyle regularText32 = TextStyle(
+    fontFamily: 'PoppinsRegular',
+    fontWeight: FontWeight.w400,
+    fontSize: 32.sp,
+    letterSpacing: 1.w,
+    height: 1.2,
+  );
   static TextStyle regularText24 = TextStyle(
     fontFamily: 'PoppinsRegular',
     fontWeight: FontWeight.w400,
