@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: AppStrings.appTitle,
       theme: getApplicationTheme(),
-      routerConfig: AppRouter().router,
+      routerConfig: router,
     );
   }
 }
