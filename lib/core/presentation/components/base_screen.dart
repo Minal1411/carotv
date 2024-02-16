@@ -35,62 +35,67 @@ class BaseScreen extends StatelessWidget {
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          leading: noBackButton
-              ? Builder(
-                  builder: (context) => SizedBox(
-                    width: 28.h,
-                    child: IconButton(
-                      icon: const Icon(
-                        Icons.menu, // This is the drawer icon
-                        color: AppColors.classicYellow,
-                      ),
-                      onPressed: () {
-                        Scaffold.of(context).openDrawer();
-                      },
-                    ),
-                  ),
-                )
-              : GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child: Icon(
-                    Icons.arrow_circle_left_outlined,
-                    color: AppColors.classicYellow,
-                    size: 28.h,
-                  ).pL(10.w),
-                ),
-          title: Text(
-            pageTitle,
-            style: AppTextStyle.boldText20.copyWith(
-              color: AppColors.classicYellow,
+        backgroundColor:
+            Colors.transparent, // Make Scaffold's background transparent
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color(0xFF003b1b),
+                Color(0xFF008f47),
+              ],
             ),
           ),
-          centerTitle: true,
-          actions: [],
+          child: Column(
+            children: [
+              AppBar(
+                leading: noBackButton
+                    ? Builder(
+                        builder: (context) => SizedBox(
+                          width: 28.h,
+                          child: IconButton(
+                            icon: const Icon(
+                              Icons.menu, // This is the drawer icon
+                              color: AppColors.classicYellow,
+                            ),
+                            onPressed: () {
+                              Scaffold.of(context).openDrawer();
+                            },
+                          ),
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          context.pop();
+                        },
+                        child: Icon(
+                          Icons.arrow_circle_left_outlined,
+                          color: AppColors.classicYellow,
+                          size: 28.h,
+                        ).pL(10.w),
+                      ),
+                title: Text(
+                  pageTitle,
+                  style: AppTextStyle.boldText20.copyWith(
+                    color: AppColors.classicYellow,
+                  ),
+                ),
+                centerTitle: true,
+                actions: actions ?? [],
+                backgroundColor:
+                    Colors.transparent, // Make AppBar's background transparent
+                elevation: 0, // Remove AppBar's shadow
+              ),
+              Expanded(child: child),
+            ],
+          ),
         ),
         bottomSheet: bottomSheet,
         drawer: drawer,
         bottomNavigationBar: bottomNavigationBar,
         floatingActionButton: floatingActionButton,
-        body: SizedBox(
-          height: double.infinity,
-          child: Column(
-            children: [
-              // CaroTvAppBar(
-              //   title: pageTitle,
-              //   titleFontSize: 20.sp,
-              //   noBackButton: noBackButton,
-              //   onBackPressed: () => Navigator.of(context).pop(),
-              //   actions: actions,
-              //   actionPadding: actions != null ? 10.w : null,
-              // ),
-              Expanded(child: child)
-            ],
-          ),
-        ),
       ),
     );
   }

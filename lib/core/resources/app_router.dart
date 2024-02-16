@@ -41,9 +41,8 @@ final GoRouter router = GoRouter(routes: [
         GoRoute(
           name: AppRoutes.registerScreen,
           path: searchScreen,
-          pageBuilder: (context, state) => const CupertinoPage(
-              child:
-                  RegisterScreen(username: 'username', password: 'password')),
+          pageBuilder: (context, state) =>
+              const CupertinoPage(child: RegisterScreen()),
         ),
         GoRoute(
           name: AppRoutes.searchScreen,
