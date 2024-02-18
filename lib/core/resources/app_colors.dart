@@ -5,9 +5,11 @@ class AppColors {
   static const secondary = Color(0xff66BB6A);
   static const primaryBackground = Color(0xff02843e);
   static const secondaryBackground = Color(0xff5CB85C);
+  static const white = Color(0xffffffff);
   static const primaryText = Color(0xFF242424);
   static const secondaryText = Colors.white;
   static const primaryBtnText = Colors.white;
+  static const buttonColor = Color(0xff00c000);
   static const error = Colors.red;
   static const black = Colors.black;
   static const inactiveColor = Color(0x26ffffff);

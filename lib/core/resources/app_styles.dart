@@ -51,6 +51,10 @@ abstract class AppTextStyle {
     fontSize: 12.sp,
   );
 
+  static TextStyle semiBoldText = TextStyle(
+    fontFamily: 'GilroySemiBold',
+  );
+
   ///SemiBold Text 18sp
   static TextStyle semiBoldText20 = TextStyle(
     fontFamily: 'GilroyRegular',
@@ -239,6 +243,12 @@ abstract class AppTextStyle {
     fontFamily: 'GilroyRegular',
     fontWeight: FontWeight.w400,
     fontSize: 11.sp,
+  );
+
+  static TextStyle lightText28 = TextStyle(
+    fontFamily: 'GilroyRegular',
+    fontWeight: FontWeight.w300,
+    fontSize: 28.sp,
   );
 
   ///Medium Text 12sp

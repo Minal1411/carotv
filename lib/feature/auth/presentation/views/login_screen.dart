@@ -90,9 +90,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         const CarotvTextField(
                           fieldName: 'username',
-                          hint: 'Username',
+                          hint: 'Email',
                           extraValidator: Validator.textValidator,
-                          label: 'Username',
+                          label: 'Email',
                           prefixIcon: Icon(
                             Icons.person,
                             color: AppColors.primary,
@@ -129,7 +129,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           },
                           child: PrimaryButton(
                             status: state.status,
-                            buttonName: 'Submit',
+                            buttonName: 'Login',
                           ),
                         ),
                       ],

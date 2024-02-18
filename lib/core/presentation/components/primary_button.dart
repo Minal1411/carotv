@@ -1,4 +1,5 @@
 import 'package:carotv/core/resources/app_colors.dart';
+import 'package:carotv/core/resources/app_styles.dart';
 import 'package:carotv/core/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,10 +17,11 @@ class PrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
-      height: 47.h,
+      width: 156.w,
+      height: 48.h,
       decoration: BoxDecoration(
-          color: AppColors.primary, borderRadius: BorderRadius.circular(10.r)),
+          color: AppColors.buttonColor,
+          borderRadius: BorderRadius.circular(10.r)),
       child: Center(
         child: status == RequestStatus.loading
             ? SizedBox(
@@ -32,9 +34,8 @@ class PrimaryButton extends StatelessWidget {
               )
             : Text(
                 buttonName,
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: AppColors.classicYellow,
-                    ),
+                style:
+                    AppTextStyle.lightText28.copyWith(color: AppColors.white),
               ),
       ),
     );
