@@ -18,6 +18,7 @@ class BaseScreen extends StatelessWidget {
     this.noBackButton = false,
     this.appBarAction,
     this.noAppBar = true,
+    this.noBg = false,
   }) : super(key: key);
 
   final Widget child;
@@ -25,6 +26,7 @@ class BaseScreen extends StatelessWidget {
   final List<Widget>? actions;
   final bool noBackButton;
   final bool? noAppBar;
+  final bool? noBg;
   final Widget? bottomSheet;
   final Widget? bottomNavigationBar;
   final Widget? drawer;
@@ -40,16 +42,18 @@ class BaseScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         // Make Scaffold's background transparent
         body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFF003b1b),
-                Color(0xFF008f47),
-              ],
-            ),
-          ),
+          decoration: noBg!
+              ? const BoxDecoration()
+              : const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Color(0xFF003b1b),
+                      Color(0xFF008f47),
+                    ],
+                  ),
+                ),
           child: Column(
             children: [
               noAppBar!

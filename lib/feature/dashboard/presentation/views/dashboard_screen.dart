@@ -1,8 +1,7 @@
 import 'package:carotv/core/presentation/components/base_screen.dart';
+import 'package:carotv/feature/auth/presentation/views/login_screen.dart';
 import 'package:carotv/feature/dashboard/presentation/components/bottom_nav_bar.dart';
 import 'package:carotv/feature/more/views/more_screen.dart';
-import 'package:carotv/feature/auth/presentation/views/login_screen.dart';
-
 import 'package:flutter/material.dart';
 
 class DashBoardScreen extends StatefulWidget {
