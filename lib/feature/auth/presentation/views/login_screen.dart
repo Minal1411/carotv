@@ -116,7 +116,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 color: Colors.white,
                                 decoration: TextDecoration.underline,
                                 decorationColor: Colors.white),
-                          ).pY(25.h),
+                          ).pY(26.h),
                         ),
                         GestureDetector(
                           onTap: () async {
