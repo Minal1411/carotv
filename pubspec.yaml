@@ -44,10 +44,24 @@ dev_dependencies:
 
   flutter_lints: ^2.0.0
   build_runner: ^2.4.8
+  flutter_native_splash: ^2.3.10
+
+
+
+
+flutter_native_splash:
+  android: true
+  ios: true
+  color: "#FFFFFF"
+  image: "assets/icons/caro_tv_icon_small.png"
+
 
 flutter:
 
   uses-material-design: true
+
+
+
 
 
   assets:
