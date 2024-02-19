@@ -180,6 +180,13 @@ abstract class AppTextStyle {
     letterSpacing: 1.w,
     height: 1.2,
   );
+
+  static TextStyle regularText30 = TextStyle(
+    fontFamily: 'GilroyRegular',
+    fontWeight: FontWeight.w400,
+    fontSize: 32.sp,
+  );
+
   static TextStyle regularText24 = TextStyle(
     fontFamily: 'GilroyRegular',
     fontWeight: FontWeight.w400,
